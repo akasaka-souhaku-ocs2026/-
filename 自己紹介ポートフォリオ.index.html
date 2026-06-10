@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sohaku Akasaka | Web Portfolio</title>
+  <style>
+    /* Geometric Balance Theme CSS Variables & Resets */
+    :root {
+      --bg-base: #ffffff;
+      --bg-sub: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-light: #94a3b8;
+      
+      --color-accent: #0ea5e9;       /* 水色 (Sky Blue) */
+      --color-accent-light: #f0f9ff;
+      --color-accent-border: #bae6fd;
+      --color-accent-dark: #0369a1;
+
+      --color-point: #f97316;        /* オレンジ (Orange) */
+      --color-point-light: #fff7ed;
+      --color-point-border: #ffedd5;
+      
+      --border-color: #e2e8f0;
+      --font-sans: 'Helvetica Neue', Arial, 'Segoe UI', Roboto, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menloe, Monaco, Consolas, monospace;
+      --container-max-width: 1024px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    /* Geometric Background Patterns & Grid Lines */
+    .viewport-grid {
+      position: relative;
+      width: 100%;
+    }
+
+    .geometric-bg {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.04) 0%, rgba(255, 255, 255, 0) 100%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Elegant Grid Lines */
+    .grid-line {
+      position: absolute;
+      background-color: var(--color-accent);
+      opacity: 0.12;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .line-v1 { width: 1px; height: 100%; left: 40px; }
+    .line-v2 { width: 1px; height: 100%; right: 40px; }
+    .line-h1 { height: 1px; width: 100%; top: 80px; }
+
+    /* Layout Utility */
+    .container {
+      width: 100%;
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    section {
+      padding: 7.5rem 0;
+      position: relative;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    section:nth-of-type(even) {
+      background-color: var(--bg-sub);
+    }
+
+    /* Section Headers in Geometric Balance style */
+    .section-header {
+      margin-bottom: 4rem;
+    }
+
+    .section-title-en {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 0.65rem;
+    }
+
+    .section-title-jp {
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .accent-dot {
+      width: 10px;
+      height: 10px;
+      background-color: var(--color-point);
+      display: inline-block;
+      border-radius: 2px; /* Sharp corner geometric dot */
+      flex-shrink: 0;
+    }
+
+    /* Sticky Straight Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 5rem;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .logo-square {
+      width: 0.75rem;
+      height: 0.75rem;
+      background-color: var(--color-accent);
+      border-radius: 1px;
+    }
+
+    .logo-text-en {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--text-light);
+      letter-spacing: 0.1em;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 2.5rem;
+    }
+
+    .nav-link {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--color-accent);
+      transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-link:hover {
+      color: var(--color-accent);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Mobile Menu Options */
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 2.5rem;
+      height: 2.5rem;
+      position: relative;
+      z-index: 200;
+    }
+
+    .mobile-menu-toggle span {
+      display: block;
+      width: 1.5rem;
+      height: 2px;
+      background-color: var(--text-main);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mobile-menu-toggle span:nth-child(1) { top: 38%; }
+    .mobile-menu-toggle span:nth-child(2) { top: 50%; }
+    .mobile-menu-toggle span:nth-child(3) { top: 62%; }
+
+    .menu-active .mobile-menu-toggle span:nth-child(1) {
+      top: 50%;
+      transform: translateX(-50%) rotate(45deg);
+    }
+    .menu-active .mobile-menu-toggle span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-active .mobile-menu-toggle span:nth-child(3) {
+      top: 50%;
+      transform: translateX(-50%) rotate(-45deg);
+    }
+
+    /* Hero Space - Grid Alignments */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 5rem;
+      background-color: #ffffff;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      background-color: var(--color-accent-light);
+      border: 1px solid var(--color-accent-border);
+      color: var(--color-accent-dark);
+      padding: 0.4rem 1rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-badge-square {
+      width: 0.5rem;
+      height: 0.5rem;
+      background-color: var(--color-point);
+      border-radius: 1px;
+    }
+
+    .hero-name {
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title-en {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--color-accent);
+      letter-spacing: 0.25em;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-name-ja {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: 0.05em;
+      line-height: 1.15;
+    }
+
+    .hero-name-en {
+      font-family: var(--font-sans);
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--text-light);
+      margin-left: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 2px;
+      background-color: var(--color-point);
+      margin: 2rem 0;
+    }
+
+    .hero-vision {
+      width: 100%;
+    }
+
+    .hero-vision-text {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #334155;
+      line-height: 1.5;
+      letter-spacing: 0.01em;
+    }
+
+    /* Abstract Balanced Graphic in CSS */
+    .hero-graphic {
+      width: 100%;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .abstract-shape-container {
+      width: 320px;
+      height: 320px;
+      position: relative;
+    }
+
+    .polygon-fill {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--color-accent) 0%, var(--color-point) 100%);
+      clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+      opacity: 0.85;
+      position: relative;
+      animation: morphShape 12s ease-in-out infinite alternate;
+    }
+
+    .polygon-outline {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      width: 100%;
+      height: 100%;
+      border: 1px solid var(--color-accent);
+      pointer-events: none;
+      clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+      animation: floatOutline 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes morphShape {
+      0% {
+        transform: translate(0px, 0px) scale(1);
+      }
+      100% {
+        transform: translate(-10px, 5px) scale(0.98);
+      }
+    }
+
+    @keyframes floatOutline {
+      0% {
+        transform: translate(15px, 15px) rotate(0deg);
+      }
+      100% {
+        transform: translate(25px, -5px) rotate(1deg);
+      }
+    }
+
+    /* Profile / Strengths Grid and borders */
+    .profile-layout {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 4rem;
+      align-items: flex-start;
+    }
+
+    .profile-card {
+      border-left: 4px solid var(--color-accent);
+      padding-left: 24px;
+    }
+
+    .profile-uni-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.4;
+      margin-bottom: 1.25rem;
+    }
+
+    .profile-desc {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .strengths-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .strength-box {
+      background-color: #ffffff;
+      border: 1px solid var(--border-color);
+      padding: 1.75rem;
+      position: relative;
+      border-radius: 4px; /* Sharp grid borders */
+    }
+
+    .strength-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--color-accent);
+      margin-bottom: 0.5rem;
+      display: block;
+      letter-spacing: 0.1em;
+    }
+
+    .strength-box.point-theme {
+      border-left: 3px solid var(--color-point);
+    }
+    .strength-box.accent-theme {
+      border-left: 3px solid var(--color-accent);
+    }
+
+    .strength-box.point-theme .strength-num {
+      color: var(--color-point);
+    }
+
+    .strength-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .strength-text {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* Skills & Qualifications Grid */
+    .skills-quad {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .skills-column-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Vertical sleek blocks */
+    .skills-bullet {
+      width: 4px;
+      height: 1.15rem;
+      background-color: var(--color-accent);
+    }
+
+    .qual-bullet {
+      width: 4px;
+      height: 1.15rem;
+      background-color: var(--color-point);
+    }
+
+    /* Text-based cards with clean layout */
+    .skills-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .skill-text-card {
+      background-color: #ffffff;
+      border: 1px solid var(--border-color);
+      padding: 1.15rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .skill-text-card:hover {
+      border-color: var(--color-accent);
+      background-color: var(--bg-sub);
+    }
+
+    .skill-name {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .skill-duration {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--color-accent-dark);
+      background-color: var(--color-accent-light);
+      border: 1px solid var(--color-accent-border);
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* Qualifications box */
+    .qual-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .qual-card {
+      background-color: #ffffff;
+      border: 1px solid var(--border-color);
+      padding: 1.15rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.125rem;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .qual-card:hover {
+      border-color: var(--color-point);
+      background-color: var(--color-point-light);
+    }
+
+    .qual-tag {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--color-accent-dark);
+      background-color: var(--color-accent-light);
+      border: 1px solid var(--color-accent-border);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .qual-card:nth-child(2) .qual-tag {
+      color: var(--color-point);
+      background-color: var(--color-point-light);
+      border-color: var(--color-point-border);
+    }
+
+    .qual-name {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Achievements/Works section */
+    .works-layout {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .work-detail-card {
+      background-color: #ffffff;
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--color-accent);
+      padding: 3rem;
+      border-radius: 4px;
+    }
+
+    .work-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--color-accent);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .work-main-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.75rem;
+    }
+
+    .work-meta {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .work-tech-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      background-color: #f1f5f9;
+      color: #475569;
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      border: 1px solid #cbd5e1;
+    }
+
+    .work-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .work-text-block {
+      border-left: 2px solid var(--border-color);
+      padding-left: 1.5rem;
+    }
+
+    .work-text-block-title {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .work-text-block-content {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    /* Footer with straight geometry */
+    footer {
+      background-color: #1e293b;
+      color: #ffffff;
+      padding: 4.5rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      z-index: 10;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .footer-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-logo-square {
+      width: 0.5rem;
+      height: 0.5rem;
+      background-color: var(--color-point);
+      border-radius: 1px;
+    }
+
+    .footer-copyright {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #94a3b8;
+      letter-spacing: 0.05em;
+    }
+
+    /* Decorative indicators layout */
+    .cross-indicator {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--border-color);
+      user-select: none;
+      z-index: 1;
+    }
+
+    .cross-top-left { top: 120px; left: 33px; color: var(--color-accent); opacity: 0.4; }
+    .cross-bottom-right { bottom: 100px; right: 33px; color: var(--color-point); opacity: 0.4; }
+
+    /* Responsive Adapts */
+    @media (max-width: 968px) {
+      .line-v1, .line-v2 { display: none; }
+      
+      section {
+        padding: 5.5rem 0;
+      }
+
+      .hero {
+        padding-top: 5rem;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3.5rem;
+        text-align: center;
+      }
+
+      .hero-content {
+        align-items: center;
+      }
+
+      .hero-name-ja {
+        font-size: 3rem;
+      }
+
+      .hero-vision-text {
+        font-size: 1.35rem;
+      }
+
+      .hero-graphic {
+        height: 320px;
+      }
+
+      .profile-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .skills-quad {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 75%;
+        max-width: 320px;
+        height: 100vh;
+        background-color: #ffffff;
+        box-shadow: -4px 0 30px rgba(15, 23, 42, 0.08);
+        padding: 6.5rem 2.5rem;
+        flex-direction: column;
+        gap: 2rem;
+        transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 150;
+      }
+
+      .menu-active .nav-menu {
+        right: 0;
+      }
+
+      .nav-mask {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(15, 23, 42, 0.35);
+        opacity: 0;
+        pointer-events: none;
+        z-index: 140;
+        backdrop-filter: blur(2px);
+        transition: opacity 0.4s ease;
+      }
+
+      .menu-active .nav-mask {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .work-detail-card {
+        padding: 2.25rem 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name-ja {
+        font-size: 2.5rem;
+      }
+
+      .hero-vision-text {
+        font-size: 1.15rem;
+      }
+
+      .abstract-shape-container {
+        width: 260px;
+        height: 260px;
+      }
+
+      .strength-box {
+        padding: 1.5rem;
+      }
+
+      .skill-text-card, .qual-card {
+        padding: 1rem 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Grid Lines & Shapes -->
+  <div class="viewport-grid">
+    <div class="geometric-bg"></div>
+    <div class="grid-line line-v1"></div>
+    <div class="grid-line line-v2"></div>
+    <div class="grid-line line-h1"></div>
+    
+    <span class="cross-indicator cross-top-left">+</span>
+    <span class="cross-indicator cross-bottom-right">+</span>
+  </div>
+
+  <!-- Background Mask for Mobile Drawer -->
+  <div class="nav-mask" id="navMask"></div>
+
+  <!-- Header -->
+  <header id="header">
+    <div class="container header-inner">
+      <div class="logo">
+        <div class="logo-square"></div>
+        <span>赤坂 宗柏</span>
+        <span class="logo-text-en">S.Akasaka</span>
+      </div>
+
+      <nav>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#hero" class="nav-link">HOME</a></li>
+          <li><a href="#profile" class="nav-link">PROFILE</a></li>
+          <li><a href="#skills" class="nav-link">SKILLS</a></li>
+          <li><a href="#works" class="nav-link">WORKS</a></li>
+        </ul>
+      </nav>
+
+      <button class="mobile-menu-toggle" id="menuToggle" aria-label="メニューを開閉する">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Space -->
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <div class="hero-badge-square"></div>
+          <span>北海道情報大学 経営情報学部 システム情報学科</span>
+        </div>
+        
+        <div class="hero-name">
+          <span class="hero-title-en">PORTFOLIO 2026</span>
+          <h1 class="hero-name-ja">
+            赤坂 宗柏
+            <span class="hero-name-en">Sohaku Akasaka</span>
+          </h1>
+        </div>
+
+        <div class="hero-divider"></div>
+
+        <div class="hero-vision">
+          <h2 class="hero-vision-text">
+            「身の回りのアナログな作業を、<br>技術の力でゼロにしたい」
+          </h2>
+        </div>
+      </div>
+
+      <div class="hero-graphic">
+        <!-- Abstract Tech Balance Shapes -->
+        <div class="abstract-shape-container">
+          <div class="polygon-fill"></div>
+          <div class="polygon-outline"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Profile Section -->
+  <section class="profile" id="profile">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-title-en">PROFILE & STRENGTHS</span>
+        <h2 class="section-title-jp">
+          <span class="accent-dot"></span>
+          プロフィール＆強み
+        </h2>
+      </div>
+
+      <div class="profile-layout">
+        <div class="profile-card">
+          <h3 class="profile-uni-title">
+            北海道情報大学<br>
+            経営情報学部 システム情報学科
+          </h3>
+          <p class="profile-desc">
+            システム情報学科に所属し、経営と情報の両面から課題を分析・解決するアプローチを修得。
+            組織の非効率なメカニズムを敏感に発見し、ITを用いたシステム化・自動化に貢献する「課題発見力」と「エンジニアリング探究力」を備えています。
+          </p>
+        </div>
+
+        <div class="strengths-layout">
+          <!-- Strength 1: Business x Systems -->
+          <div class="strength-box accent-theme">
+            <span class="strength-num">STRENGTH 01</span>
+            <h4 class="strength-title">経営×情報の広範な視点</h4>
+            <p class="strength-text">
+              単にコードを書く枠組みを越え、「経営課題の解決にITがどうリンクするか」という広域的なレイヤーでシステム要件を吟味できる多角的発想を強みとしています。
+            </p>
+          </div>
+
+          <!-- Strength 2: Problem Hunting / Automating -->
+          <div class="strength-box point-theme">
+            <span class="strength-num">STRENGTH 02</span>
+            <h4 class="strength-title">強固な課題発見力と変革力</h4>
+            <p class="strength-text">
+              「既存のアナログ慣習」を無批判に受け入れるのではなく、業務活動に存在するムダや手書きプロセスの不健全なアナログ作業を発見し、技術力によってデジタル効率化を図るマインドを持ちます。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills & Qualifications Section -->
+  <section class="skills" id="skills">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-title-en">SKILLSETS</span>
+        <h2 class="section-title-jp">
+          <span class="accent-dot"></span>
+          スキル・資格
+        </h2>
+      </div>
+
+      <div class="skills-quad">
+        <!-- Learning History -->
+        <div>
+          <h3 class="skills-column-title">
+            <div class="skills-bullet"></div>
+            <span>技術学習歴 (学習年数)</span>
+          </h3>
+          <div class="skills-list">
+            <div class="skill-text-card">
+              <span class="skill-name">Java</span>
+              <span class="skill-duration">1年間</span>
+            </div>
+            <div class="skill-text-card">
+              <span class="skill-name">Python</span>
+              <span class="skill-duration">半年間</span>
+            </div>
+            <div class="skill-text-card">
+              <span class="skill-name">HTML / CSS</span>
+              <span class="skill-duration">半年間</span>
+            </div>
+            <div class="skill-text-card">
+              <span class="skill-name">VBA (Excel)</span>
+              <span class="skill-duration">半年間</span>
+            </div>
+            <div class="skill-text-card">
+              <span class="skill-name">JavaScript</span>
+              <span class="skill-duration">半年間</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Qualifications -->
+        <div>
+          <h3 class="skills-column-title">
+            <div class="qual-bullet"></div>
+            <span>取得資格</span>
+          </h3>
+          <div class="qual-grid">
+            <div class="qual-card">
+              <span class="qual-tag">国家資格</span>
+              <span class="qual-name">基本情報技術者試験 (FE)</span>
+            </div>
+            <div class="qual-card">
+              <span class="qual-tag">語学教育</span>
+              <span class="qual-name">実用英語技能検定 準2級</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Production Achievements Section -->
+  <section class="works" id="works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-title-en">PROJECT DETAILS</span>
+        <h2 class="section-title-jp">
+          <span class="accent-dot"></span>
+          制作実績
+        </h2>
+      </div>
+
+      <div class="works-layout">
+        <div class="work-detail-card">
+          <span class="work-eyebrow">WEB DEVELOPMENT</span>
+          <h3 class="work-main-title">部活動の掲示板WEBサイト</h3>
+          
+          <div class="work-meta">
+            <span class="work-tech-tag">HTML</span>
+            <span class="work-tech-tag">CSS</span>
+          </div>
+
+          <div class="work-body">
+            <div class="work-text-block">
+              <h4 class="work-text-block-title">概要</h4>
+              <p class="work-text-block-content">
+                連絡の遅れや周知漏れが発生しやすかった部内のアナログ連絡体制をデジタル移行するために構築した、HTML/CSSベースの掲示板サイトです。
+              </p>
+            </div>
+
+            <div class="work-text-block">
+              <h4 class="work-text-block-title">課題の解決成果</h4>
+              <p class="work-text-block-content">
+                これまで対面での口頭確認やホワイトボード、紙の回覧に依存していた部活動の連絡ステップを完全デジタル化。部員が場所を選ばず速やかに最新情報を確認できる仕組みを構築し、配布ペーパーレス化とともに、伝達ミスを劇的に削減いたしました。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-logo">
+        <div class="footer-logo-square"></div>
+        <span>赤坂 宗柏</span>
+      </div>
+      <p class="footer-copyright">
+        &copy; 2026 SOHAKU AKASAKA. ALL RIGHTS RESERVED.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Responsive Mobile Drawer Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuToggle = document.getElementById('menuToggle');
+      const navMenu = document.getElementById('navMenu');
+      const navMask = document.getElementById('navMask');
+      const navLinks = document.querySelectorAll('.nav-link');
+      const header = document.getElementById('header');
+
+      const toggleMenu = () => {
+        document.body.classList.toggle('menu-active');
+      };
+
+      const closeMenu = () => {
+        document.body.classList.remove('menu-active');
+      };
+
+      menuToggle.addEventListener('click', toggleMenu);
+      navMask.addEventListener('click', closeMenu);
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      // Smooth scrolling adjustment for header height
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href');
+          const targetSection = document.querySelector(targetId);
+          if (targetSection) {
+            const headerHeight = header.offsetHeight;
+            const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+
+      // Header Scroll Styling
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 40) {
+          header.style.boxShadow = '0 1px 15px rgba(15, 23, 42, 0.05)';
+          header.style.padding = '0.1rem 0';
+        } else {
+          header.style.boxShadow = 'none';
+          header.style.padding = '0';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
